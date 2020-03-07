@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>关于hashMap的面试考点 | Ricky&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="Ricky,Ricky's Blog" />
+  
+  <meta name="description" content="关于HashMap的一些面试考点1.数据结构分析答： 在jdk1.7之前，是数组和链表的结合体；外层是数组结构，内层是链表结构。 在jdk1.8之后，是数组和红黑树的结构，当然一开始还是数组-链表的结构，当链表 的长度大于一点阈值时，链表会转换为红黑树，这样可以减少链表的查询时间。 2.非线程安全答： hashMap是线程不安全的，如果要保证线程安全，应该使用hashTable替代。 结果： 若使">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于hashMap的面试考点">
+<meta property="og:url" content="http://ricky739996585.github.io/2019/10/12/%E5%85%B3%E4%BA%8EhashMap%E7%9A%84%E9%9D%A2%E8%AF%95%E8%80%83%E7%82%B9/index.html">
+<meta property="og:site_name" content="Ricky&#39;s Blog">
+<meta property="og:description" content="关于HashMap的一些面试考点1.数据结构分析答： 在jdk1.7之前，是数组和链表的结合体；外层是数组结构，内层是链表结构。 在jdk1.8之后，是数组和红黑树的结构，当然一开始还是数组-链表的结构，当链表 的长度大于一点阈值时，链表会转换为红黑树，这样可以减少链表的查询时间。 2.非线程安全答： hashMap是线程不安全的，如果要保证线程安全，应该使用hashTable替代。 结果： 若使">
+<meta property="og:image" content="http://ricky739996585.github.io/2019/10/12/%E5%85%B3%E4%BA%8EhashMap%E7%9A%84%E9%9D%A2%E8%AF%95%E8%80%83%E7%82%B9/%E5%85%B3%E4%BA%8EhashMap%E7%9A%84%E9%9D%A2%E8%AF%95%E8%80%83%E7%82%B9/test1.png">
+<meta property="og:image" content="http://ricky739996585.github.io/2019/10/12/%E5%85%B3%E4%BA%8EhashMap%E7%9A%84%E9%9D%A2%E8%AF%95%E8%80%83%E7%82%B9/%E5%85%B3%E4%BA%8EhashMap%E7%9A%84%E9%9D%A2%E8%AF%95%E8%80%83%E7%82%B9/test2.png">
+<meta property="og:image" content="http://ricky739996585.github.io/2019/10/12/%E5%85%B3%E4%BA%8EhashMap%E7%9A%84%E9%9D%A2%E8%AF%95%E8%80%83%E7%82%B9/%E5%85%B3%E4%BA%8EhashMap%E7%9A%84%E9%9D%A2%E8%AF%95%E8%80%83%E7%82%B9/test3.png">
+<meta property="og:image" content="http://ricky739996585.github.io/2019/10/12/%E5%85%B3%E4%BA%8EhashMap%E7%9A%84%E9%9D%A2%E8%AF%95%E8%80%83%E7%82%B9/%E5%85%B3%E4%BA%8EhashMap%E7%9A%84%E9%9D%A2%E8%AF%95%E8%80%83%E7%82%B9/test4.png">
+<meta property="article:published_time" content="2019-10-12T02:59:26.000Z">
+<meta property="article:modified_time" content="2019-10-12T07:09:37.202Z">
+<meta property="article:author" content="Ricky">
+<meta property="article:tag" content="HashMap">
+<meta property="article:tag" content="源码">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://ricky739996585.github.io/2019/10/12/%E5%85%B3%E4%BA%8EhashMap%E7%9A%84%E9%9D%A2%E8%AF%95%E8%80%83%E7%82%B9/%E5%85%B3%E4%BA%8EhashMap%E7%9A%84%E9%9D%A2%E8%AF%95%E8%80%83%E7%82%B9/test1.png">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+<script src="/js/pace.min.js"></script>
+
+  
+
+  
+  
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">Ricky&#39;s Blog</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="/">
+                        <i class="fa fa-home"></i>
+                        <span>主页</span>
+                    </a>
+                    
+                    <a  href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>文章</span>
+                    </a>
+                    
+                    <a  href="/about">
+                        <i class="fa fa-user"></i>
+                        <span>关于</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/img/logo.jpg" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        Ricky&#39;s Blog
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        一个不务正业的技术博客
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="Ricky" target="_blank" href="//ricky739996585.github.io">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/ricky739996585">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="Weibo" target="_blank" href="//weibo.com/ricky73999">
+                            <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-关于hashMap的面试考点" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      关于hashMap的面试考点
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/面试/">面试</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2019-10-12
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <h1 id="关于HashMap的一些面试考点"><a href="#关于HashMap的一些面试考点" class="headerlink" title="关于HashMap的一些面试考点"></a>关于HashMap的一些面试考点</h1><h2 id="1-数据结构分析"><a href="#1-数据结构分析" class="headerlink" title="1.数据结构分析"></a>1.数据结构分析</h2><p>答：</p>
+<p>在jdk1.7之前，是<font color = red><strong>数组和链表</strong></font>的结合体；外层是数组结构，内层是链表结构。</p>
+<p>在jdk1.8之后，是<font color = red><strong>数组和红黑树</strong></font>的结构，当然一开始还是数组-链表的结构，当链表 的长度大于一点阈值时，链表会转换为红黑树，这样可以减少链表的查询时间。</p>
+<h2 id="2-非线程安全"><a href="#2-非线程安全" class="headerlink" title="2.非线程安全"></a>2.非线程安全</h2><p>答：</p>
+<p>hashMap是线程不安全的，如果要保证线程安全，应该使用hashTable替代。</p>
+<p>结果：</p>
+<p>若使用多线程操作同一个hashMap，可能导致陷入死循环的结果，造成死锁，CPU使用率100%的问题（基于jdk1.7之前的版本）。</p>
+<p>为什么：</p>
+<p>贴上测试代码：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public class HashMapInfiniteLoop &#123;  </span><br><span class="line"></span><br><span class="line">    private static HashMap&lt;Integer,String&gt; map &#x3D; new HashMap&lt;Integer,String&gt;(2，0.75f);  </span><br><span class="line">    public static void main(String[] args) &#123;  </span><br><span class="line">        map.put(5， &quot;C&quot;);  </span><br><span class="line"></span><br><span class="line">        new Thread(&quot;Thread1&quot;) &#123;  </span><br><span class="line">            public void run() &#123;  </span><br><span class="line">                map.put(7, &quot;B&quot;);  </span><br><span class="line">                System.out.println(map);  </span><br><span class="line">            &#125;;  </span><br><span class="line">        &#125;.start();  </span><br><span class="line">        new Thread(&quot;Thread2&quot;) &#123;  </span><br><span class="line">            public void run() &#123;  </span><br><span class="line">                map.put(3, &quot;A);  </span><br><span class="line">                System.out.println(map);  </span><br><span class="line">            &#125;;  </span><br><span class="line">        &#125;.start();        </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里需要根据源码来分析一波~~</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"> void transfer(Entry[] newTable, boolean rehash) &#123;</span><br><span class="line">    int newCapacity &#x3D; newTable.length;</span><br><span class="line">    for (Entry&lt;K,V&gt; e : table) &#123;</span><br><span class="line">        while(null !&#x3D; e) &#123;</span><br><span class="line">            Entry&lt;K,V&gt; next &#x3D; e.next;</span><br><span class="line">            if (rehash) &#123;</span><br><span class="line">                e.hash &#x3D; null &#x3D;&#x3D; e.key ? 0 : hash(e.key);</span><br><span class="line">            &#125;</span><br><span class="line">            int i &#x3D; indexFor(e.hash, newCapacity);</span><br><span class="line">            e.next &#x3D; newTable[i];</span><br><span class="line">            newTable[i] &#x3D; e;</span><br><span class="line">            e &#x3D; next;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如上图的374行重点处，是一个遍历桶的操作，有一个指针指向下一个的e=e.next操作，这里就是问题的根源所在。下面来分析如何造成死锁：</p>
+<p>我们放开thread1的断点至transfer方法的“Entry next = e.next;” 这一行</p>
+<p>然后放开线程2的的断点，让线程2进行resize。结果如下图</p>
+<p><img src="%E5%85%B3%E4%BA%8EhashMap%E7%9A%84%E9%9D%A2%E8%AF%95%E8%80%83%E7%82%B9/test1.png" alt=""></p>
+<p>注意，Thread1的 e 指向了key(3)，而next指向了key(7)，其在Thread2 rehash后，指向了Thread2重组后的链表。</p>
+<p><img src="%E5%85%B3%E4%BA%8EhashMap%E7%9A%84%E9%9D%A2%E8%AF%95%E8%80%83%E7%82%B9/test2.png" alt=""></p>
+<p>Thread1被调度回来执行，先是执行 newTalbe[i] = e， 然后是e = next，导致了e指向key(7)，而下一次循环的next = e.next导致了next指向了key(3)。</p>
+<p><img src="%E5%85%B3%E4%BA%8EhashMap%E7%9A%84%E9%9D%A2%E8%AF%95%E8%80%83%E7%82%B9/test3.png" alt=""></p>
+<p>e.next = newTable[i] 导致 key(3).next 指向了 key(7)。注意：此时的key(7).next 已经指向了key(3)， 环形链表就这样出现了。</p>
+<p><img src="%E5%85%B3%E4%BA%8EhashMap%E7%9A%84%E9%9D%A2%E8%AF%95%E8%80%83%E7%82%B9/test4.png" alt=""></p>
+<p>于是，当我们用线程一调用map.get(11)时，获取map中不存在的元素时，就会一直循坏这个链表，但由于是环形链表，所以是死循环。</p>
+<h2 id="3-扩容机制"><a href="#3-扩容机制" class="headerlink" title="3.扩容机制"></a>3.扩容机制</h2><h4 id="1-什么时候扩容："><a href="#1-什么时候扩容：" class="headerlink" title="1.什么时候扩容："></a>1.什么时候扩容：</h4><p>首先，Node[] table的初始化长度<strong>length</strong>(默认值是16)，<strong>Load factor</strong>为负载因子(默认值是0.75)，<strong>threshold</strong>是HashMap所能容纳的最大数据量的Node(键值对)个数。</p>
+<p>当元素数目超过<strong>threshold</strong>的时候，就要重新扩容。</p>
+<h4 id="2-如何扩容："><a href="#2-如何扩容：" class="headerlink" title="2.如何扩容："></a>2.如何扩容：</h4><p>扩容后的HashMap容量是之前容量的两倍，扩容的容量应是2^n（一定是合数）。</p>
+<h4 id="3-为什么是按上面这样扩容："><a href="#3-为什么是按上面这样扩容：" class="headerlink" title="3.为什么是按上面这样扩容："></a>3.为什么是按上面这样扩容：</h4><p>HashMap采用这种非常规设计，主要是为了在取模和扩容时做优化，同时为了减少冲突（哈希碰撞），HashMap定位哈希桶索引位置时，也加入了高位参与运算的过程</p>
+<p>在扩容时，需要把原来的元素重新计算在新的map的位置，本来是一个计算比较复杂的过程，通过上面这样设计，发现原来的元素的 索引 = 原索引 + oldCap，这样就方便计算很多 </p>
+<p>而且把之前的冲突的节点均匀的分散到新的桶中。</p>
+<h2 id="4-Fail-Fast机制"><a href="#4-Fail-Fast机制" class="headerlink" title="4.Fail-Fast机制"></a>4.Fail-Fast机制</h2><p>答：</p>
+<p>采用了Fail-Fast机制，通过一个modCount值记录修改次数，对HashMap内容的修改都将增加这个值。迭代器初始化过程中会将这个值赋给迭代器的expectedModCount，在迭代过程中，判断modCount跟expectedModCount是否相等，如果不相等就表示已经有其他线程修改了Map，马上抛出异常</p>
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2019年10月12日 15:09</p>
+        <p>原始链接： <a class="post-url" href="/2019/10/12/%E5%85%B3%E4%BA%8EhashMap%E7%9A%84%E9%9D%A2%E8%AF%95%E8%80%83%E7%82%B9/" title="关于hashMap的面试考点">http://ricky739996585.github.io/2019/10/12/%E5%85%B3%E4%BA%8EhashMap%E7%9A%84%E9%9D%A2%E8%AF%95%E8%80%83%E7%82%B9/</a></p>
+        <footer>
+            <a href="http://ricky739996585.github.io">
+                <img src="/img/logo.jpg" alt="Ricky">
+                Ricky
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;">赏</a>
+</div>
+
+<div id="reward" class="post-modal reward-lay">
+    <a class="close" href="javascript:;" id="reward-close">×</a>
+    <span class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃糖~
+        <i class="icon icon-quote-right"></i>
+    </span>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/images/wechat_code.jpg" alt="打赏二维码">
+        </div>
+        <div class="reward-select">
+            
+            <label class="reward-select-item checked" data-id="wechat" data-wechat="/images/wechat_code.jpg">
+                <img class="reward-select-item-wechat" src="/images/wechat.png" alt="微信">
+            </label>
+            
+            
+            <label class="reward-select-item" data-id="alipay" data-alipay="/images/alipay_code.jpg">
+                <img class="reward-select-item-alipay" src="/images/alipay.png" alt="支付宝">
+            </label>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://ricky739996585.github.io/2019/10/12/%E5%85%B3%E4%BA%8EhashMap%E7%9A%84%E9%9D%A2%E8%AF%95%E8%80%83%E7%82%B9/&title=《关于hashMap的面试考点》 — Ricky's Blog&pic=cover/cover1.jpg" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://ricky739996585.github.io/2019/10/12/%E5%85%B3%E4%BA%8EhashMap%E7%9A%84%E9%9D%A2%E8%AF%95%E8%80%83%E7%82%B9/&title=《关于hashMap的面试考点》 — Ricky's Blog&source=专注 WEB 开发的技术博客" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://ricky739996585.github.io/2019/10/12/%E5%85%B3%E4%BA%8EhashMap%E7%9A%84%E9%9D%A2%E8%AF%95%E8%80%83%E7%82%B9/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《关于hashMap的面试考点》 — Ricky's Blog&url=http://ricky739996585.github.io/2019/10/12/%E5%85%B3%E4%BA%8EhashMap%E7%9A%84%E9%9D%A2%E8%AF%95%E8%80%83%E7%82%B9/&via=http://ricky739996585.github.io" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://ricky739996585.github.io/2019/10/12/%E5%85%B3%E4%BA%8EhashMap%E7%9A%84%E9%9D%A2%E8%AF%95%E8%80%83%E7%82%B9/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://ricky739996585.github.io/2019/10/12/%E5%85%B3%E4%BA%8EhashMap%E7%9A%84%E9%9D%A2%E8%AF%95%E8%80%83%E7%82%B9/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/HashMap/" class="color3">HashMap</a>
+      
+    <a href="/tags/源码/" class="color3">源码</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#关于HashMap的一些面试考点"><span class="post-toc-text">关于HashMap的一些面试考点</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-数据结构分析"><span class="post-toc-text">1.数据结构分析</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2-非线程安全"><span class="post-toc-text">2.非线程安全</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3-扩容机制"><span class="post-toc-text">3.扩容机制</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-什么时候扩容："><span class="post-toc-text">1.什么时候扩容：</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-如何扩容："><span class="post-toc-text">2.如何扩容：</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-为什么是按上面这样扩容："><span class="post-toc-text">3.为什么是按上面这样扩容：</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#4-Fail-Fast机制"><span class="post-toc-text">4.Fail-Fast机制</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+    <a href="/2020/01/11/JAVA-%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84/" id="article-nav-newer" class="article-nav-link-wrap">
+
+      <span class="article-nav-title">
+        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
+        
+          JAVA 内存结构
+        
+      </span>
+    </a>
+  
+  
+</nav>
+
+
+
+    
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2020 Ricky<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "http://ricky739996585.github.io",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 1
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/categories/%E9%9D%A2%E8%AF%95/">面试</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/tags/HashMap/" style="font-size: 10px;">HashMap</a> <a href="/tags/JVM/" style="font-size: 10px;">JVM</a> <a href="/tags/%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84/" style="font-size: 10px;">内存结构</a> <a href="/tags/%E6%BA%90%E7%A0%81/" style="font-size: 10px;">源码</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="/">
+                    <i class="fa fa-home"></i><span>主页</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/archives">
+                    <i class="fa fa-archive"></i><span>文章</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/about">
+                    <i class="fa fa-user"></i><span>关于</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/tags/HashMap/" style="font-size: 10px;">HashMap</a> <a href="/tags/JVM/" style="font-size: 10px;">JVM</a> <a href="/tags/%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84/" style="font-size: 10px;">内存结构</a> <a href="/tags/%E6%BA%90%E7%A0%81/" style="font-size: 10px;">源码</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+
+<script src="/js/search.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  
+<script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+
+  
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  
+<script src="/js/animate.js"></script>
+
+
+
+  
+<script src="/js/pop-img.js"></script>
+
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+</body>
+</html>
