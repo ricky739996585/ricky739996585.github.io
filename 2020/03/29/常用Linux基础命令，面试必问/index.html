@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>常用Linux基础命令，面试必问 | Ricky&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="Ricky,Ricky's Blog" />
+  
+  <meta name="description" content="netstat1.netstat简介​        netstat是一个监控TCP&#x2F;IP网络的非常有用的工具，它可以显示路由表，实际的网络连接以及每一个网络接口设备的状态信息，netstat用于显示与IP,TCP,UDP和ICMP协议相关的统计数据，一般用于查询本机各端口的网络连接情况。 2.netstat常用参数​        常用的几个参数有：-a -n -p -l 　　-a 显示所有so">
+<meta property="og:type" content="article">
+<meta property="og:title" content="常用Linux基础命令，面试必问">
+<meta property="og:url" content="http://ricky739996585.github.io/2020/03/29/%E5%B8%B8%E7%94%A8Linux%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4%EF%BC%8C%E9%9D%A2%E8%AF%95%E5%BF%85%E9%97%AE/index.html">
+<meta property="og:site_name" content="Ricky&#39;s Blog">
+<meta property="og:description" content="netstat1.netstat简介​        netstat是一个监控TCP&#x2F;IP网络的非常有用的工具，它可以显示路由表，实际的网络连接以及每一个网络接口设备的状态信息，netstat用于显示与IP,TCP,UDP和ICMP协议相关的统计数据，一般用于查询本机各端口的网络连接情况。 2.netstat常用参数​        常用的几个参数有：-a -n -p -l 　　-a 显示所有so">
+<meta property="og:image" content="http://ricky739996585.github.io/2020/03/29/%E5%B8%B8%E7%94%A8Linux%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4%EF%BC%8C%E9%9D%A2%E8%AF%95%E5%BF%85%E9%97%AE/test1.png">
+<meta property="og:image" content="http://ricky739996585.github.io/2020/03/29/%E5%B8%B8%E7%94%A8Linux%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4%EF%BC%8C%E9%9D%A2%E8%AF%95%E5%BF%85%E9%97%AE/test2.png">
+<meta property="article:published_time" content="2020-03-29T06:49:24.000Z">
+<meta property="article:modified_time" content="2020-03-29T07:52:57.848Z">
+<meta property="article:author" content="Ricky">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://ricky739996585.github.io/2020/03/29/%E5%B8%B8%E7%94%A8Linux%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4%EF%BC%8C%E9%9D%A2%E8%AF%95%E5%BF%85%E9%97%AE/test1.png">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+<script src="/js/pace.min.js"></script>
+
+  
+
+  
+  
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">Ricky&#39;s Blog</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="/">
+                        <i class="fa fa-home"></i>
+                        <span>主页</span>
+                    </a>
+                    
+                    <a  href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>文章</span>
+                    </a>
+                    
+                    <a  href="/about">
+                        <i class="fa fa-user"></i>
+                        <span>关于</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/img/logo.jpg" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        Ricky&#39;s Blog
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        一个不务正业的技术博客
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="Ricky" target="_blank" href="//ricky739996585.github.io">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/ricky739996585">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="Weibo" target="_blank" href="//weibo.com/ricky73999">
+                            <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-常用Linux基础命令，面试必问" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      常用Linux基础命令，面试必问
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/面试/">面试</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2020-03-29
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <h1 id="netstat"><a href="#netstat" class="headerlink" title="netstat"></a>netstat</h1><h2 id="1-netstat简介"><a href="#1-netstat简介" class="headerlink" title="1.netstat简介"></a>1.netstat简介</h2><p>​        netstat是一个监控TCP/IP网络的非常有用的工具，它可以显示路由表，实际的网络连接以及每一个网络接口设备的状态信息，netstat用于显示与IP,TCP,UDP和ICMP协议相关的统计数据，一般用于查询本机各端口的网络连接情况。</p>
+<h2 id="2-netstat常用参数"><a href="#2-netstat常用参数" class="headerlink" title="2.netstat常用参数"></a>2.netstat常用参数</h2><p>​        常用的几个参数有：-a -n -p -l</p>
+<p>　　-a 显示所有socket，包括正在监听的</p>
+<p>　　-l 显示有在 Listen (监听) 的服务状态</p>
+<p>　　-n 以网络IP地址代替名称，显示网络连接情形</p>
+<p>　　-p 显示建立相关连接的程序名和PID</p>
+<p>　　-t 显示TCP协议的连接情况</p>
+<p>　　-u 显示UDP协议的连接情况</p>
+<p>　　-s 显示每个协议的统计</p>
+<p>　　-b 显示在创建每个连接或监听端口时涉及的可执行程序</p>
+<p>　　-c 每个1秒就重新显示一遍，直到用户中断</p>
+<h2 id="3-netstat常用组合命令"><a href="#3-netstat常用组合命令" class="headerlink" title="3.netstat常用组合命令"></a>3.netstat常用组合命令</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Proto:连接协议</span><br><span class="line">Local Address:本地地址（如果使用参数n,则会以IP形式展示）</span><br><span class="line">Foreign Address:外部地址（如果使用参数n,则会以IP形式展示）</span><br><span class="line">PID：进程号(可以使用kill -9 pid 杀死相关进程)</span><br><span class="line">Program name：程序名</span><br><span class="line">State：监听状态</span><br><span class="line">	1.LISTEN　　			监听来自远方的TCP端口的连接请求</span><br><span class="line">    2.SYN-SENT　　		在发送连接请求后等待匹配的连接请求</span><br><span class="line">    3.SYN-RECEIVED　　	在收到和发送一个连接请求后等待对方对连接请求的确认</span><br><span class="line">    4.ESTABLISHED　　		代表一个打开的连接</span><br><span class="line">    5.TIME-WAIT　　		等待足够的时间以确保远程TCP接收到连接中断请求的确认</span><br><span class="line">    6.CLOSED　　			没有任何连接状态</span><br><span class="line">    7.CLOSED-WAIT　　		等待从本地用户发来的连接中断请求</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>netstat  -a （列出所有连接，包括tcp、udp连接）</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ netstat -a</span><br><span class="line"></span><br><span class="line">Active Internet connections (servers and established)</span><br><span class="line"></span><br><span class="line">Proto Recv-Q Send-Q Local Address           Foreign Address         State      </span><br><span class="line">tcp        0      0 enlightened:domain      *:*                     LISTEN     </span><br><span class="line">tcp        0      0 localhost:ipp           *:*                     LISTEN     </span><br><span class="line">tcp        0      0 enlightened.local:54750 li240-5.members.li:http ESTABLISHED</span><br><span class="line">tcp        0      0 enlightened.local:49980 del01s07-in-f14.1:https ESTABLISHED</span><br><span class="line">tcp6       0      0 ip6-localhost:ipp       [::]:*                  LISTEN     </span><br><span class="line">udp        0      0 enlightened:domain      *:*</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>netstat  -ntlp|grep port (查询端口号是否被占用)</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@77-9-162-bx-core ~]# netstat -ntlp|grep 8090</span><br><span class="line">Proto Recv-Q	  Local Address		Foreign Address		 State		PID&#x2F;Program name</span><br><span class="line">tcp        0      0 0.0.0.0:8090    0.0.0.0:*            LISTEN   	8904&#x2F;vintage</span><br></pre></td></tr></table></figure>
+
+<p>  3.netstat  -ntlp|grep  程序名 (查询程序占用的端口)</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@77-9-162-bx-core ~]# netstat -ntlp|grep mysql</span><br><span class="line">Proto Recv-Q	  Local Address		Foreign Address		 State		PID&#x2F;Program name</span><br><span class="line">tcp        0      0 0.0.0.0:3306    0.0.0.0:*            LISTEN   	8809&#x2F;mysql</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="ps"><a href="#ps" class="headerlink" title="ps"></a>ps</h1><h2 id="1-ps简介"><a href="#1-ps简介" class="headerlink" title="1.ps简介"></a>1.ps简介</h2><p>​        ps(process status) 命令是 Linux 下最常用的进程查看工具，使用该命令可以确定哪些进程正在运行和运行的状态、进程是否结束、进程有没有僵尸、哪些进程占用了过多的资源等等。</p>
+<pre><code>注意：ps 命令工具显示的是进程的瞬间状态，并不是动态连续显示，如果想对进程状态进行实时监控应该用 top 命令。</code></pre><h2 id="2-ps常用参数"><a href="#2-ps常用参数" class="headerlink" title="2.ps常用参数"></a>2.ps常用参数</h2><p>   参数：</p>
+<p>​    -A ：所有的进程均显示出来，与 -e 具有同样的效用；</p>
+<p>​    -a ：显示现行终端机下的所有进程，包括其他用户的进程；</p>
+<p>​    -e：显示系统内所有进程的信息。与 -A 选项功能相同</p>
+<p>​    -f：使用完整 (full) 的格式显示进程信息，如果只有 ps -e 则输出进程信息的格式和只使用 ps 一样</p>
+<p>   -u ：以用户为主的进程状态 </p>
+<p>   -x：显示当前用户在所有终端下的进程信息</p>
+<h2 id="3-ps常用组合命令"><a href="#3-ps常用组合命令" class="headerlink" title="3.ps常用组合命令"></a>3.ps常用组合命令</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">*PID：表示该进程的唯一 ID 号</span><br><span class="line"></span><br><span class="line">TTY 或 TT：启动进程的终端名。表示该进程在哪个终端上运行。不是从终端启动的进程或与终端机无关的进程则显示为 ？ </span><br><span class="line"></span><br><span class="line">*TIME：该进程使用 CPU 的累计时间</span><br><span class="line"></span><br><span class="line">*CMD：该进程所运行的命令</span><br><span class="line"></span><br><span class="line">UID：启动该进程的用户的 ID 号</span><br><span class="line"></span><br><span class="line">PPID：代表该进程的父进程的 ID 号</span><br><span class="line"></span><br><span class="line">*STIME&#x2F;START：表示进程的启动时间</span><br><span class="line"></span><br><span class="line">*USER：启动该进程的用户帐号名称</span><br><span class="line"></span><br><span class="line">*%CPU：表示进程的 CPU 占用率</span><br><span class="line"></span><br><span class="line">*%MEM：表示进程的内存占用率</span><br><span class="line"></span><br><span class="line">VSZ：表示进程虚拟内存的大小，以 KB 为单位</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><p>ps -aux（以面向用户的格式显示当前终端下的所有信息）</p>
+<p><img src="test1.png" alt=""></p>
+</li>
+<li><p>ps -ef|grep port (查询相关端口对应的进程信息)</p>
+</li>
+<li><p>ps -ef|grep 程序名(查询程序名对应的进程信息)</p>
+</li>
+<li><p>ps -aux –sort=%mem （以内存占用率作为升序排序，默认+升序排序，+是升序，-是降序）</p>
+<p><img src="test2.png" alt=""></p>
+</li>
+</ol>
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2020年03月29日 15:52</p>
+        <p>原始链接： <a class="post-url" href="/2020/03/29/%E5%B8%B8%E7%94%A8Linux%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4%EF%BC%8C%E9%9D%A2%E8%AF%95%E5%BF%85%E9%97%AE/" title="常用Linux基础命令，面试必问">http://ricky739996585.github.io/2020/03/29/%E5%B8%B8%E7%94%A8Linux%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4%EF%BC%8C%E9%9D%A2%E8%AF%95%E5%BF%85%E9%97%AE/</a></p>
+        <footer>
+            <a href="http://ricky739996585.github.io">
+                <img src="/img/logo.jpg" alt="Ricky">
+                Ricky
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;">赏</a>
+</div>
+
+<div id="reward" class="post-modal reward-lay">
+    <a class="close" href="javascript:;" id="reward-close">×</a>
+    <span class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃糖~
+        <i class="icon icon-quote-right"></i>
+    </span>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/images/wechat_code.jpg" alt="打赏二维码">
+        </div>
+        <div class="reward-select">
+            
+            <label class="reward-select-item checked" data-id="wechat" data-wechat="/images/wechat_code.jpg">
+                <img class="reward-select-item-wechat" src="/images/wechat.png" alt="微信">
+            </label>
+            
+            
+            <label class="reward-select-item" data-id="alipay" data-alipay="/images/alipay_code.jpg">
+                <img class="reward-select-item-alipay" src="/images/alipay.png" alt="支付宝">
+            </label>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://ricky739996585.github.io/2020/03/29/%E5%B8%B8%E7%94%A8Linux%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4%EF%BC%8C%E9%9D%A2%E8%AF%95%E5%BF%85%E9%97%AE/&title=《常用Linux基础命令，面试必问》 — Ricky's Blog&pic=cover/cover3.jpg" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://ricky739996585.github.io/2020/03/29/%E5%B8%B8%E7%94%A8Linux%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4%EF%BC%8C%E9%9D%A2%E8%AF%95%E5%BF%85%E9%97%AE/&title=《常用Linux基础命令，面试必问》 — Ricky's Blog&source=专注 WEB 开发的技术博客" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://ricky739996585.github.io/2020/03/29/%E5%B8%B8%E7%94%A8Linux%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4%EF%BC%8C%E9%9D%A2%E8%AF%95%E5%BF%85%E9%97%AE/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《常用Linux基础命令，面试必问》 — Ricky's Blog&url=http://ricky739996585.github.io/2020/03/29/%E5%B8%B8%E7%94%A8Linux%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4%EF%BC%8C%E9%9D%A2%E8%AF%95%E5%BF%85%E9%97%AE/&via=http://ricky739996585.github.io" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://ricky739996585.github.io/2020/03/29/%E5%B8%B8%E7%94%A8Linux%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4%EF%BC%8C%E9%9D%A2%E8%AF%95%E5%BF%85%E9%97%AE/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://ricky739996585.github.io/2020/03/29/%E5%B8%B8%E7%94%A8Linux%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4%EF%BC%8C%E9%9D%A2%E8%AF%95%E5%BF%85%E9%97%AE/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/Linux/" class="color1">Linux</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#netstat"><span class="post-toc-text">netstat</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-netstat简介"><span class="post-toc-text">1.netstat简介</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2-netstat常用参数"><span class="post-toc-text">2.netstat常用参数</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3-netstat常用组合命令"><span class="post-toc-text">3.netstat常用组合命令</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#ps"><span class="post-toc-text">ps</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-ps简介"><span class="post-toc-text">1.ps简介</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2-ps常用参数"><span class="post-toc-text">2.ps常用参数</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3-ps常用组合命令"><span class="post-toc-text">3.ps常用组合命令</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+  
+    <a href="/2020/01/11/JAVA-%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">JAVA 内存结构</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2020 Ricky<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "http://ricky739996585.github.io",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 1
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/categories/%E9%9D%A2%E8%AF%95/">面试</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/tags/HashMap/" style="font-size: 10px;">HashMap</a> <a href="/tags/JVM/" style="font-size: 10px;">JVM</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84/" style="font-size: 10px;">内存结构</a> <a href="/tags/%E6%BA%90%E7%A0%81/" style="font-size: 10px;">源码</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="/">
+                    <i class="fa fa-home"></i><span>主页</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/archives">
+                    <i class="fa fa-archive"></i><span>文章</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/about">
+                    <i class="fa fa-user"></i><span>关于</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/tags/HashMap/" style="font-size: 10px;">HashMap</a> <a href="/tags/JVM/" style="font-size: 10px;">JVM</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84/" style="font-size: 10px;">内存结构</a> <a href="/tags/%E6%BA%90%E7%A0%81/" style="font-size: 10px;">源码</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+
+<script src="/js/search.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  
+<script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+
+  
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  
+<script src="/js/animate.js"></script>
+
+
+
+  
+<script src="/js/pop-img.js"></script>
+
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+</body>
+</html>
