@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>当面试官面你TCP时 | Ricky&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="Ricky,Ricky's Blog" />
+  
+  <meta name="description" content="当面试官面你TCP时1.TCP的概念按一个问题的时间顺序来看，这可能会是面试官面的第一个问题，当然有可能会直接跳过这个问题，问你“三次握手原则”，但我觉得这个问题还是很值得深入去解释的。 百度百科的定义： 传输控制协议（TCP，Transmission Control Protocol）是一种面向连接的、可靠的、基于字节流的传输层通信协议 这里有两个比较容易关联的东西：“可靠的”、“传输层” 传输">
+<meta property="og:type" content="article">
+<meta property="og:title" content="当面试官面你TCP时">
+<meta property="og:url" content="http://ricky739996585.github.io/2020/04/09/%E5%BD%93%E9%9D%A2%E8%AF%95%E5%AE%98%E9%9D%A2%E4%BD%A0TCP%E6%97%B6/index.html">
+<meta property="og:site_name" content="Ricky&#39;s Blog">
+<meta property="og:description" content="当面试官面你TCP时1.TCP的概念按一个问题的时间顺序来看，这可能会是面试官面的第一个问题，当然有可能会直接跳过这个问题，问你“三次握手原则”，但我觉得这个问题还是很值得深入去解释的。 百度百科的定义： 传输控制协议（TCP，Transmission Control Protocol）是一种面向连接的、可靠的、基于字节流的传输层通信协议 这里有两个比较容易关联的东西：“可靠的”、“传输层” 传输">
+<meta property="og:image" content="http://ricky739996585.github.io/2020/04/09/%E5%BD%93%E9%9D%A2%E8%AF%95%E5%AE%98%E9%9D%A2%E4%BD%A0TCP%E6%97%B6/test1.png">
+<meta property="og:image" content="http://ricky739996585.github.io/2020/04/09/%E5%BD%93%E9%9D%A2%E8%AF%95%E5%AE%98%E9%9D%A2%E4%BD%A0TCP%E6%97%B6/test2.png">
+<meta property="article:published_time" content="2020-04-09T03:06:01.000Z">
+<meta property="article:modified_time" content="2020-04-09T05:58:31.762Z">
+<meta property="article:author" content="Ricky">
+<meta property="article:tag" content="TCP">
+<meta property="article:tag" content="网络通信">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://ricky739996585.github.io/2020/04/09/%E5%BD%93%E9%9D%A2%E8%AF%95%E5%AE%98%E9%9D%A2%E4%BD%A0TCP%E6%97%B6/test1.png">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+<script src="/js/pace.min.js"></script>
+
+  
+
+  
+  
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">Ricky&#39;s Blog</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="/">
+                        <i class="fa fa-home"></i>
+                        <span>主页</span>
+                    </a>
+                    
+                    <a  href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>文章</span>
+                    </a>
+                    
+                    <a  href="/about">
+                        <i class="fa fa-user"></i>
+                        <span>关于</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/img/logo.jpg" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        Ricky&#39;s Blog
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        一个不务正业的技术博客
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="Ricky" target="_blank" href="//ricky739996585.github.io">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/ricky739996585">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="Weibo" target="_blank" href="//weibo.com/ricky73999">
+                            <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-当面试官面你TCP时" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      当面试官面你TCP时
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/面试/">面试</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2020-04-09
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <h1 id="当面试官面你TCP时"><a href="#当面试官面你TCP时" class="headerlink" title="当面试官面你TCP时"></a>当面试官面你TCP时</h1><h2 id="1-TCP的概念"><a href="#1-TCP的概念" class="headerlink" title="1.TCP的概念"></a>1.TCP的概念</h2><p>按一个问题的时间顺序来看，这可能会是面试官面的第一个问题，当然有可能会直接跳过这个问题，问你“三次握手原则”，但我觉得这个问题还是很值得深入去解释的。</p>
+<p>百度百科的定义：</p>
+<p>传输控制协议（TCP，Transmission Control Protocol）是一种面向连接的、可靠的、基于字节流的传输层通信协议</p>
+<p>这里有两个比较容易关联的东西：“可靠的”、“传输层”</p>
+<p>传输层：网络7大协议模型中的第4层，负责分割、组合数据，实现端到端的逻辑连接，数据传输，即主机到主机的层次</p>
+<p>可靠的：何为可靠的，你就可以顺着这个思路去讲述TCP的三次握手……</p>
+<h2 id="2-三次握手原则"><a href="#2-三次握手原则" class="headerlink" title="2.三次握手原则"></a>2.三次握手原则</h2><p><img src="test1.png" alt=""></p>
+<p><strong>备注：C端 == 客户端、 S端 == 服务端</strong></p>
+<p>1.第一次握手：</p>
+<p>建立连接时，C端 发送syn包（syn=x）到服务器，并进入SYN_SENT状态，等待服务器确认；</p>
+<p>SYN：同步序列编号（Synchronize Sequence Numbers）</p>
+<p>2.第二次握手：</p>
+<p>服务器收到syn包，必须确认客户的SYN（ack=x+1），同时自己也发送一个SYN包（syn=y），即SYN+ACK包，此时服务器进入SYN_RECV状态；</p>
+<p>3.第三次握手：</p>
+<p>客户端收到服务器的SYN+ACK包，向服务器发送确认包ACK(ack=y+1），此包发送完毕，客户端和服务器进入ESTABLISHED（TCP连接成功）状态，完成三次握手。</p>
+<p>以上这些流程很多地方都有讲述，都是要一定掌握的，但是仅仅知道过程如此还不够，接下来接收面试官的追问！</p>
+<h3 id="（1）为什么是3次握手，2次握手不行？"><a href="#（1）为什么是3次握手，2次握手不行？" class="headerlink" title="（1）为什么是3次握手，2次握手不行？"></a>（1）为什么是3次握手，2次握手不行？</h3><p><strong>答：</strong>首先 C端 ==&gt; S端 发送建立连接请求，S端返回给C端ACK确认，说明 C端 ==&gt;S端 发送数据的过程是流畅的，成功的。但是 S端 不能确定与C端是否网络通畅，也就是S端 ==&gt; C端不知道能否成功接受到信息，所以C端要再回复S端传过来的SYN数据，传一个ACK包回去S端，说明C==&gt;S,S==&gt;C都是通畅的过程，保证稳定性</p>
+<h3 id="（2）如果C与S成功建立连接后，但是没有传输数据，一段时间后，S端挂掉了，C端会处于什么状态："><a href="#（2）如果C与S成功建立连接后，但是没有传输数据，一段时间后，S端挂掉了，C端会处于什么状态：" class="headerlink" title="（2）如果C与S成功建立连接后，但是没有传输数据，一段时间后，S端挂掉了，C端会处于什么状态："></a>（2）如果C与S成功建立连接后，但是没有传输数据，一段时间后，S端挂掉了，C端会处于什么状态：</h3><p><strong>答：</strong>ESTAB-LISHED状态，因为C端不知道S端是否关闭或者中断</p>
+<h3 id="（3）如果C端与S端建立连接后，C端出现故障挂掉了，S端怎么处理"><a href="#（3）如果C端与S端建立连接后，C端出现故障挂掉了，S端怎么处理" class="headerlink" title="（3）如果C端与S端建立连接后，C端出现故障挂掉了，S端怎么处理"></a>（3）如果C端与S端建立连接后，C端出现故障挂掉了，S端怎么处理</h3><p><strong>答：</strong>TCP有一个保活计时器，用于保持活跃的计时，一般设置是2h左右，如果2h内C端没有任何反应或者回复，S端会发一个探测报文给C端，大概每隔一个周期发送一次，发送10次之后仍没反应，则认为C端挂掉，CLOSE连接</p>
+<h2 id="3-四次分手原则"><a href="#3-四次分手原则" class="headerlink" title="3.四次分手原则"></a>3.四次分手原则</h2><p><img src="test2.png" alt=""></p>
+<p><strong>注意：C端在结束时的几个状态的切换</strong></p>
+<p><strong>FIN = FINISH状态</strong></p>
+<ol>
+<li><p>客户端进程发出连接释放报文，并且停止发送数据。释放数据报文首部标识符FIN，FIN=1，其序列号为seq=u，此时，客户端进入FIN-WAIT-1（终止等待-1）状态</p>
+</li>
+<li><p>服务器收到连接释放报文，发出确认报文，ACK=1，ack=u+1，并且带上自己的序列号seq=v，此时，服务端就进入了CLOSE-WAIT（关闭等待）状态。TCP服务器通知高层的应用进程，客户端向服务器的方向就要释放了，这时候处于半关闭状态，即客户端已经没有数据要发送了，但是服务器若发送数据，客户端依然要接受。这个状态还要持续一段时间，也就是整个CLOSE-WAIT状态持续的时间</p>
+<p><font color = red><strong>（总结：S端告诉C端我知道你要分手，进入CLOSE-WAIT，但是如果S端有数据没发完，你要等我发完再分手，不能说你要分手就马上分，所以先返回一个ACK通知，但是并不是马上分手）</strong></font></p>
+</li>
+<li><p>C端收到S端的确认请求后，进入FIN-WAIT-2（终止等待-2），等待S端什么时候告诉你可以分手（在这之前还需要接受S端发送的最后的数据）</p>
+</li>
+<li><p>S端发送完最后的数据，发送现在可以分手的报文，由于在CLOSE-WAIT状态，服务器很可能又发送了一些数据，此时，服务器就进入了LAST-ACK（最后确认）状态，等待C端的确认</p>
+<p><font color = red><strong>（总结：S端告诉C端现在可以准备分手了，然后等待C端确认）</strong></font></p>
+</li>
+<li><p>C端接收完发过来的报文了，然后回复这条释放资源的报文ACK确认，然后进入TIME-WAIT（时间等待）状态</p>
+</li>
+<li><p>S端接收到确认后，进入CLOSED状态，结束TCP连接。S端会比C端更快结束TCP连接</p>
+</li>
+</ol>
+<p>以上的过程总共分为6步解释，每步的操作都有它的含义和道理，缺一不可。</p>
+<h3 id="细心的人会注意到，C端结束TCP连接之前，有一个TIME-WAIT状态，为什么会要有这个状态，为什么不是马上结束？"><a href="#细心的人会注意到，C端结束TCP连接之前，有一个TIME-WAIT状态，为什么会要有这个状态，为什么不是马上结束？" class="headerlink" title="细心的人会注意到，C端结束TCP连接之前，有一个TIME-WAIT状态，为什么会要有这个状态，为什么不是马上结束？"></a>细心的人会注意到，C端结束TCP连接之前，有一个TIME-WAIT状态，为什么会要有这个状态，为什么不是马上结束？</h3><p><strong>答：</strong></p>
+<p>如果C端在发送最后一个ACK报文时，出现网络故障，则S端没有收到最后一个ACK报文，S端则会重复发送要开始分手的报文。<br>所以等待的这段时间，是为了防止S端没有收到ACK报文，又重新发来分手请求报文，来重新发送ACK报文给S端，重新告诉S端，我已经知道要分手了！<br>只有S端收到ACK报文才能释放TCP连接。</p>
+<p>这种种的设计都是为了说明，这是一个可靠的链接！！！</p>
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2020年04月09日 13:58</p>
+        <p>原始链接： <a class="post-url" href="/2020/04/09/%E5%BD%93%E9%9D%A2%E8%AF%95%E5%AE%98%E9%9D%A2%E4%BD%A0TCP%E6%97%B6/" title="当面试官面你TCP时">http://ricky739996585.github.io/2020/04/09/%E5%BD%93%E9%9D%A2%E8%AF%95%E5%AE%98%E9%9D%A2%E4%BD%A0TCP%E6%97%B6/</a></p>
+        <footer>
+            <a href="http://ricky739996585.github.io">
+                <img src="/img/logo.jpg" alt="Ricky">
+                Ricky
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;">赏</a>
+</div>
+
+<div id="reward" class="post-modal reward-lay">
+    <a class="close" href="javascript:;" id="reward-close">×</a>
+    <span class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃糖~
+        <i class="icon icon-quote-right"></i>
+    </span>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/images/wechat_code.jpg" alt="打赏二维码">
+        </div>
+        <div class="reward-select">
+            
+            <label class="reward-select-item checked" data-id="wechat" data-wechat="/images/wechat_code.jpg">
+                <img class="reward-select-item-wechat" src="/images/wechat.png" alt="微信">
+            </label>
+            
+            
+            <label class="reward-select-item" data-id="alipay" data-alipay="/images/alipay_code.jpg">
+                <img class="reward-select-item-alipay" src="/images/alipay.png" alt="支付宝">
+            </label>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://ricky739996585.github.io/2020/04/09/%E5%BD%93%E9%9D%A2%E8%AF%95%E5%AE%98%E9%9D%A2%E4%BD%A0TCP%E6%97%B6/&title=《当面试官面你TCP时》 — Ricky's Blog&pic=cover/cover3.jpg" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://ricky739996585.github.io/2020/04/09/%E5%BD%93%E9%9D%A2%E8%AF%95%E5%AE%98%E9%9D%A2%E4%BD%A0TCP%E6%97%B6/&title=《当面试官面你TCP时》 — Ricky's Blog&source=专注 WEB 开发的技术博客" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://ricky739996585.github.io/2020/04/09/%E5%BD%93%E9%9D%A2%E8%AF%95%E5%AE%98%E9%9D%A2%E4%BD%A0TCP%E6%97%B6/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《当面试官面你TCP时》 — Ricky's Blog&url=http://ricky739996585.github.io/2020/04/09/%E5%BD%93%E9%9D%A2%E8%AF%95%E5%AE%98%E9%9D%A2%E4%BD%A0TCP%E6%97%B6/&via=http://ricky739996585.github.io" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://ricky739996585.github.io/2020/04/09/%E5%BD%93%E9%9D%A2%E8%AF%95%E5%AE%98%E9%9D%A2%E4%BD%A0TCP%E6%97%B6/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://ricky739996585.github.io/2020/04/09/%E5%BD%93%E9%9D%A2%E8%AF%95%E5%AE%98%E9%9D%A2%E4%BD%A0TCP%E6%97%B6/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/TCP/" class="color4">TCP</a>
+      
+    <a href="/tags/网络通信/" class="color5">网络通信</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#当面试官面你TCP时"><span class="post-toc-text">当面试官面你TCP时</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-TCP的概念"><span class="post-toc-text">1.TCP的概念</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2-三次握手原则"><span class="post-toc-text">2.三次握手原则</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#（1）为什么是3次握手，2次握手不行？"><span class="post-toc-text">（1）为什么是3次握手，2次握手不行？</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#（2）如果C与S成功建立连接后，但是没有传输数据，一段时间后，S端挂掉了，C端会处于什么状态："><span class="post-toc-text">（2）如果C与S成功建立连接后，但是没有传输数据，一段时间后，S端挂掉了，C端会处于什么状态：</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#（3）如果C端与S端建立连接后，C端出现故障挂掉了，S端怎么处理"><span class="post-toc-text">（3）如果C端与S端建立连接后，C端出现故障挂掉了，S端怎么处理</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3-四次分手原则"><span class="post-toc-text">3.四次分手原则</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#细心的人会注意到，C端结束TCP连接之前，有一个TIME-WAIT状态，为什么会要有这个状态，为什么不是马上结束？"><span class="post-toc-text">细心的人会注意到，C端结束TCP连接之前，有一个TIME-WAIT状态，为什么会要有这个状态，为什么不是马上结束？</span></a></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+  
+    <a href="/2020/03/29/%E5%B8%B8%E7%94%A8Linux%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4%EF%BC%8C%E9%9D%A2%E8%AF%95%E5%BF%85%E9%97%AE/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">常用Linux基础命令，面试必问</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2020 Ricky<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "http://ricky739996585.github.io",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 1
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/categories/%E9%9D%A2%E8%AF%95/">面试</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/tags/HashMap/" style="font-size: 10px;">HashMap</a> <a href="/tags/JVM/" style="font-size: 10px;">JVM</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/TCP/" style="font-size: 10px;">TCP</a> <a href="/tags/%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84/" style="font-size: 10px;">内存结构</a> <a href="/tags/%E6%BA%90%E7%A0%81/" style="font-size: 10px;">源码</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1/" style="font-size: 10px;">网络通信</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="/">
+                    <i class="fa fa-home"></i><span>主页</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/archives">
+                    <i class="fa fa-archive"></i><span>文章</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/about">
+                    <i class="fa fa-user"></i><span>关于</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/tags/HashMap/" style="font-size: 10px;">HashMap</a> <a href="/tags/JVM/" style="font-size: 10px;">JVM</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/TCP/" style="font-size: 10px;">TCP</a> <a href="/tags/%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84/" style="font-size: 10px;">内存结构</a> <a href="/tags/%E6%BA%90%E7%A0%81/" style="font-size: 10px;">源码</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1/" style="font-size: 10px;">网络通信</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+
+<script src="/js/search.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  
+<script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+
+  
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  
+<script src="/js/animate.js"></script>
+
+
+
+  
+<script src="/js/pop-img.js"></script>
+
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+</body>
+</html>
