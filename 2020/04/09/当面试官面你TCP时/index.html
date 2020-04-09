@@ -17,7 +17,7 @@
 <meta property="og:image" content="http://ricky739996585.github.io/2020/04/09/%E5%BD%93%E9%9D%A2%E8%AF%95%E5%AE%98%E9%9D%A2%E4%BD%A0TCP%E6%97%B6/test1.png">
 <meta property="og:image" content="http://ricky739996585.github.io/2020/04/09/%E5%BD%93%E9%9D%A2%E8%AF%95%E5%AE%98%E9%9D%A2%E4%BD%A0TCP%E6%97%B6/test2.png">
 <meta property="article:published_time" content="2020-04-09T03:06:01.000Z">
-<meta property="article:modified_time" content="2020-04-09T05:58:31.762Z">
+<meta property="article:modified_time" content="2020-04-09T06:11:18.222Z">
 <meta property="article:author" content="Ricky">
 <meta property="article:tag" content="TCP">
 <meta property="article:tag" content="网络通信">
@@ -166,9 +166,9 @@
 <p>3.第三次握手：</p>
 <p>客户端收到服务器的SYN+ACK包，向服务器发送确认包ACK(ack=y+1），此包发送完毕，客户端和服务器进入ESTABLISHED（TCP连接成功）状态，完成三次握手。</p>
 <p>以上这些流程很多地方都有讲述，都是要一定掌握的，但是仅仅知道过程如此还不够，接下来接收面试官的追问！</p>
-<h3 id="（1）为什么是3次握手，2次握手不行？"><a href="#（1）为什么是3次握手，2次握手不行？" class="headerlink" title="（1）为什么是3次握手，2次握手不行？"></a>（1）为什么是3次握手，2次握手不行？</h3><p><strong>答：</strong>首先 C端 ==&gt; S端 发送建立连接请求，S端返回给C端ACK确认，说明 C端 ==&gt;S端 发送数据的过程是流畅的，成功的。但是 S端 不能确定与C端是否网络通畅，也就是S端 ==&gt; C端不知道能否成功接受到信息，所以C端要再回复S端传过来的SYN数据，传一个ACK包回去S端，说明C==&gt;S,S==&gt;C都是通畅的过程，保证稳定性</p>
-<h3 id="（2）如果C与S成功建立连接后，但是没有传输数据，一段时间后，S端挂掉了，C端会处于什么状态："><a href="#（2）如果C与S成功建立连接后，但是没有传输数据，一段时间后，S端挂掉了，C端会处于什么状态：" class="headerlink" title="（2）如果C与S成功建立连接后，但是没有传输数据，一段时间后，S端挂掉了，C端会处于什么状态："></a>（2）如果C与S成功建立连接后，但是没有传输数据，一段时间后，S端挂掉了，C端会处于什么状态：</h3><p><strong>答：</strong>ESTAB-LISHED状态，因为C端不知道S端是否关闭或者中断</p>
-<h3 id="（3）如果C端与S端建立连接后，C端出现故障挂掉了，S端怎么处理"><a href="#（3）如果C端与S端建立连接后，C端出现故障挂掉了，S端怎么处理" class="headerlink" title="（3）如果C端与S端建立连接后，C端出现故障挂掉了，S端怎么处理"></a>（3）如果C端与S端建立连接后，C端出现故障挂掉了，S端怎么处理</h3><p><strong>答：</strong>TCP有一个保活计时器，用于保持活跃的计时，一般设置是2h左右，如果2h内C端没有任何反应或者回复，S端会发一个探测报文给C端，大概每隔一个周期发送一次，发送10次之后仍没反应，则认为C端挂掉，CLOSE连接</p>
+<h4 id="（1）为什么是3次握手，2次握手不行？"><a href="#（1）为什么是3次握手，2次握手不行？" class="headerlink" title="（1）为什么是3次握手，2次握手不行？"></a>（1）为什么是3次握手，2次握手不行？</h4><p><strong>答：</strong>首先 C端 ==&gt; S端 发送建立连接请求，S端返回给C端ACK确认，说明 C端 ==&gt;S端 发送数据的过程是流畅的，成功的。但是 S端 不能确定与C端是否网络通畅，也就是S端 ==&gt; C端不知道能否成功接受到信息，所以C端要再回复S端传过来的SYN数据，传一个ACK包回去S端，说明C==&gt;S,S==&gt;C都是通畅的过程，保证稳定性</p>
+<h4 id="（2）如果C与S成功建立连接后，但是没有传输数据，一段时间后，S端挂掉了，C端会处于什么状态："><a href="#（2）如果C与S成功建立连接后，但是没有传输数据，一段时间后，S端挂掉了，C端会处于什么状态：" class="headerlink" title="（2）如果C与S成功建立连接后，但是没有传输数据，一段时间后，S端挂掉了，C端会处于什么状态："></a>（2）如果C与S成功建立连接后，但是没有传输数据，一段时间后，S端挂掉了，C端会处于什么状态：</h4><p><strong>答：</strong>ESTAB-LISHED状态，因为C端不知道S端是否关闭或者中断</p>
+<h4 id="（3）如果C端与S端建立连接后，C端出现故障挂掉了，S端怎么处理"><a href="#（3）如果C端与S端建立连接后，C端出现故障挂掉了，S端怎么处理" class="headerlink" title="（3）如果C端与S端建立连接后，C端出现故障挂掉了，S端怎么处理"></a>（3）如果C端与S端建立连接后，C端出现故障挂掉了，S端怎么处理</h4><p><strong>答：</strong>TCP有一个保活计时器，用于保持活跃的计时，一般设置是2h左右，如果2h内C端没有任何反应或者回复，S端会发一个探测报文给C端，大概每隔一个周期发送一次，发送10次之后仍没反应，则认为C端挂掉，CLOSE连接</p>
 <h2 id="3-四次分手原则"><a href="#3-四次分手原则" class="headerlink" title="3.四次分手原则"></a>3.四次分手原则</h2><p><img src="test2.png" alt=""></p>
 <p><strong>注意：C端在结束时的几个状态的切换</strong></p>
 <p><strong>FIN = FINISH状态</strong></p>
@@ -189,13 +189,13 @@
 </li>
 </ol>
 <p>以上的过程总共分为6步解释，每步的操作都有它的含义和道理，缺一不可。</p>
-<h3 id="细心的人会注意到，C端结束TCP连接之前，有一个TIME-WAIT状态，为什么会要有这个状态，为什么不是马上结束？"><a href="#细心的人会注意到，C端结束TCP连接之前，有一个TIME-WAIT状态，为什么会要有这个状态，为什么不是马上结束？" class="headerlink" title="细心的人会注意到，C端结束TCP连接之前，有一个TIME-WAIT状态，为什么会要有这个状态，为什么不是马上结束？"></a>细心的人会注意到，C端结束TCP连接之前，有一个TIME-WAIT状态，为什么会要有这个状态，为什么不是马上结束？</h3><p><strong>答：</strong></p>
+<h4 id="（1）细心的人会注意到，C端结束TCP连接之前，有一个TIME-WAIT状态，为什么会要有这个状态，为什么不是马上结束？"><a href="#（1）细心的人会注意到，C端结束TCP连接之前，有一个TIME-WAIT状态，为什么会要有这个状态，为什么不是马上结束？" class="headerlink" title="（1）细心的人会注意到，C端结束TCP连接之前，有一个TIME-WAIT状态，为什么会要有这个状态，为什么不是马上结束？"></a>（1）细心的人会注意到，C端结束TCP连接之前，有一个TIME-WAIT状态，为什么会要有这个状态，为什么不是马上结束？</h4><p><strong>答：</strong></p>
 <p>如果C端在发送最后一个ACK报文时，出现网络故障，则S端没有收到最后一个ACK报文，S端则会重复发送要开始分手的报文。<br>所以等待的这段时间，是为了防止S端没有收到ACK报文，又重新发来分手请求报文，来重新发送ACK报文给S端，重新告诉S端，我已经知道要分手了！<br>只有S端收到ACK报文才能释放TCP连接。</p>
 <p>这种种的设计都是为了说明，这是一个可靠的链接！！！</p>
-
+<h5 id="结语：以上部分观点是基于我的理解，如果有写错的地方，麻烦提醒一下我，谢谢！"><a href="#结语：以上部分观点是基于我的理解，如果有写错的地方，麻烦提醒一下我，谢谢！" class="headerlink" title="结语：以上部分观点是基于我的理解，如果有写错的地方，麻烦提醒一下我，谢谢！"></a>结语：以上部分观点是基于我的理解，如果有写错的地方，麻烦提醒一下我，谢谢！</h5>
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2020年04月09日 13:58</p>
+        <p>最后更新： 2020年04月09日 14:11</p>
         <p>原始链接： <a class="post-url" href="/2020/04/09/%E5%BD%93%E9%9D%A2%E8%AF%95%E5%AE%98%E9%9D%A2%E4%BD%A0TCP%E6%97%B6/" title="当面试官面你TCP时">http://ricky739996585.github.io/2020/04/09/%E5%BD%93%E9%9D%A2%E8%AF%95%E5%AE%98%E9%9D%A2%E4%BD%A0TCP%E6%97%B6/</a></p>
         <footer>
             <a href="http://ricky739996585.github.io">
@@ -253,7 +253,7 @@
     <div class="post-share-list" id="share-list">
         <ul class="share-icons">
           <li>
-            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://ricky739996585.github.io/2020/04/09/%E5%BD%93%E9%9D%A2%E8%AF%95%E5%AE%98%E9%9D%A2%E4%BD%A0TCP%E6%97%B6/&title=《当面试官面你TCP时》 — Ricky's Blog&pic=cover/cover3.jpg" data-title="微博">
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://ricky739996585.github.io/2020/04/09/%E5%BD%93%E9%9D%A2%E8%AF%95%E5%AE%98%E9%9D%A2%E4%BD%A0TCP%E6%97%B6/&title=《当面试官面你TCP时》 — Ricky's Blog&pic=cover/cover4.jpg" data-title="微博">
               <i class="fa fa-weibo"></i>
             </a>
           </li>
@@ -315,7 +315,7 @@
 
     <aside class="post-toc-pos post-toc-top" id="post-toc">
         <nav class="post-toc-wrap">
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#当面试官面你TCP时"><span class="post-toc-text">当面试官面你TCP时</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-TCP的概念"><span class="post-toc-text">1.TCP的概念</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2-三次握手原则"><span class="post-toc-text">2.三次握手原则</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#（1）为什么是3次握手，2次握手不行？"><span class="post-toc-text">（1）为什么是3次握手，2次握手不行？</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#（2）如果C与S成功建立连接后，但是没有传输数据，一段时间后，S端挂掉了，C端会处于什么状态："><span class="post-toc-text">（2）如果C与S成功建立连接后，但是没有传输数据，一段时间后，S端挂掉了，C端会处于什么状态：</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#（3）如果C端与S端建立连接后，C端出现故障挂掉了，S端怎么处理"><span class="post-toc-text">（3）如果C端与S端建立连接后，C端出现故障挂掉了，S端怎么处理</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3-四次分手原则"><span class="post-toc-text">3.四次分手原则</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#细心的人会注意到，C端结束TCP连接之前，有一个TIME-WAIT状态，为什么会要有这个状态，为什么不是马上结束？"><span class="post-toc-text">细心的人会注意到，C端结束TCP连接之前，有一个TIME-WAIT状态，为什么会要有这个状态，为什么不是马上结束？</span></a></li></ol></li></ol></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#当面试官面你TCP时"><span class="post-toc-text">当面试官面你TCP时</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-TCP的概念"><span class="post-toc-text">1.TCP的概念</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2-三次握手原则"><span class="post-toc-text">2.三次握手原则</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#（1）为什么是3次握手，2次握手不行？"><span class="post-toc-text">（1）为什么是3次握手，2次握手不行？</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#（2）如果C与S成功建立连接后，但是没有传输数据，一段时间后，S端挂掉了，C端会处于什么状态："><span class="post-toc-text">（2）如果C与S成功建立连接后，但是没有传输数据，一段时间后，S端挂掉了，C端会处于什么状态：</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#（3）如果C端与S端建立连接后，C端出现故障挂掉了，S端怎么处理"><span class="post-toc-text">（3）如果C端与S端建立连接后，C端出现故障挂掉了，S端怎么处理</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3-四次分手原则"><span class="post-toc-text">3.四次分手原则</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#（1）细心的人会注意到，C端结束TCP连接之前，有一个TIME-WAIT状态，为什么会要有这个状态，为什么不是马上结束？"><span class="post-toc-text">（1）细心的人会注意到，C端结束TCP连接之前，有一个TIME-WAIT状态，为什么会要有这个状态，为什么不是马上结束？</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#结语：以上部分观点是基于我的理解，如果有写错的地方，麻烦提醒一下我，谢谢！"><span class="post-toc-text">结语：以上部分观点是基于我的理解，如果有写错的地方，麻烦提醒一下我，谢谢！</span></a></li></ol></li></ol></li></ol></li></ol></li></ol>
         </nav>
     </aside>
     
